@@ -57,17 +57,17 @@ app.post('/login', (req, res) => {
   } else res.send('Login inválido.');
 });
 
-app.get('/', (req, res) => {
+app.get('/admin', auth, (req, res) => {
   const items = readCarousel();
-  res.send(`<html><body><div style="text-align:center;">
-    <img src="/public/logo.jpeg" style="max-height:80px;">
-    <h2>coffee and a little more</h2>
-  </div><div>${
-    items.map((item, i) => item.type.startsWith('image') ?
-      `<img src="${item.url}" style="max-width:100%;"/>` :
-      `<video src="${item.url}" controls style="max-width:100%;"></video>`).join('')
-  }</div></body></html>`);
+  res.send(`<form method="POST" enctype="multipart/form-data" action="/admin/upload">
+    <input type="file" name="media"/>
+    <input name="caption"/>
+    <button>Enviar</button>
+  </form>${
+    items.map((item, i) => `<div>${item.caption} - <a href="/admin/remove?i=${i}">Remover</a></div>`).join('')
+  }`);
 });
+
 
 app.get('/admin', auth, (req, res) => {
   const items = readCarousel();
