@@ -68,6 +68,18 @@ app.get('/admin', auth, (req, res) => {
   }`);
 });
 
+app.get('/admin', auth, (req, res) => {
+  const items = readCarousel();
+  res.send(`<form method="POST" enctype="multipart/form-data" action="/admin/upload">
+    <input type="file" name="media"/>
+    <input name="caption"/>
+    <button>Enviar</button>
+  </form>${
+    items.map((item, i) => `<div>${item.caption} - <a href="/admin/remove?i=${i}">Remover</a></div>`).join('')
+  }`);
+});
+
+
 
 app.get('/admin', auth, (req, res) => {
   const items = readCarousel();
