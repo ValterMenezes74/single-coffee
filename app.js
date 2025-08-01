@@ -57,15 +57,16 @@ app.post('/login', (req, res) => {
   } else res.send('Login inválido.');
 });
 
-app.get('/logout', (req, res) => req.session.destroy(() => res.redirect('/login')));
-
 app.get('/', (req, res) => {
   const items = readCarousel();
-  res.send(\`<html><body><div style="text-align:center;"><img src="/public/logo.jpeg" style="max-height:80px;"><h2>coffee and a little more</h2></div><div>\${
+  res.send(`<html><body><div style="text-align:center;">
+    <img src="/public/logo.jpeg" style="max-height:80px;">
+    <h2>coffee and a little more</h2>
+  </div><div>${
     items.map((item, i) => item.type.startsWith('image') ?
-      \`<img src="\${item.url}" style="max-width:100%;"/>\` :
-      \`<video src="\${item.url}" controls style="max-width:100%;"></video>\`).join('')
-  }</div></body></html>\`);
+      `<img src="${item.url}" style="max-width:100%;"/>` :
+      `<video src="${item.url}" controls style="max-width:100%;"></video>`).join('')
+  }</div></body></html>`);
 });
 
 app.get('/admin', auth, (req, res) => {
