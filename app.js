@@ -54,6 +54,11 @@ function auth(req, res, next) {
   res.redirect('/login');
 }
 
+// Rota raiz
+app.get('/', (req, res) => {
+  res.redirect('/login'); // Redireciona diretamente para o login
+});
+
 // Rotas
 app.get('/login', (req, res) => {
   res.send('<form method="POST"><input name="user"/><input type="password" name="pass"/><button>Entrar</button></form>');
